@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Café Blues - Cliente</title>
+  <style>
+    :root {
+      --marrom-escuro: #3B2314;
+      --marrom: #6B3E26;
+      --caramelo: #C18E5E;
+      --bege: #F5E9DA;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, var(--caramelo), var(--marrom), var(--marrom-escuro));
+      background-attachment: fixed;
+      color: var(--bege);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+
+    
+    .section { display: none; }
+    .active { display: block; }
+
+    
+    .login-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      width: 350px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0px 6px 15px rgba(0,0,0,0.4);
+      text-align: center;
+      margin: 100px auto;
+    }
+
+    .login-container img {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .login-container h1 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background: var(--bege);
+      color: var(--marrom-escuro);
+      font-size: 14px;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      background-color: var(--marrom-escuro);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login-container button:hover {
+      background-color: var(--marrom);
+    }
+
+    
+    .carousel {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      height: 500px;
+      margin: 30px auto;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+
+    .carousel img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: none;
+    }
+
+    .carousel img.active {
+      display: block;
+    }
+
+    .carousel .prev, .carousel .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      font-size: 24px;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .carousel .prev { left: 10px; }
+    .carousel .next { right: 10px; }
+
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .banner{
+      width: 100%;
+      max-width: none;
+      margin: 30px auto;
+      text-align: center;
+    }
+
+    .banner img{
+      width: 100%;
+      max-height: 250px;
+      object-fit: contain;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+
+    
+    .search-bar {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 25px;
+      padding: 5px 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .search-bar input {
+      border: none;
+      outline: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 25px;
+      width: 450px;
+    }
+
+    .search-bar button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--marrom-escuro);
+    }
+  </style>
+</head>
+<body>
+  
+  <section id="login-section" class="section active">
+    <div class="login-container">
+      <img src="logo.jpg" alt="Logo Café Blues">
+      <h1>Café Blues</h1>
+      <p>Café com alma, como bom Blues</p>
+      <form onsubmit="return validarLogin(event)">
+        <input type="text" id="usuario" placeholder="Usuário" required>
+        <input type="password" id="senha" placeholder="Senha" required>
+        <button type="submit">Entrar</button>
+        <button type="button" onclick="showCliente()">Sou Cliente</button>
+      </form>
+    </div>
+  </section>
+
+  
+  <section id="cliente-section" class="section">
+
+    <div class="banner">
+      <img src="banner2.jpg" alt="cafeteria café blues">
+
+      <div class="search-bar">
+        <input type="text" placeholder="pesquisar pratos...">
+        <button>🔎</button>
+      </div>
+    </div>
+
+    
+    
+    <div class="carousel">
+      <img src="carrossel1.jpg" class="active" alt="Slide 1">
+      <img src="carrossel2.jpg" alt="Slide 2">
+      <img src="carrossel3.jpg" alt="Slide 3">
+      <img src="carrossel4.jpg" alt="Slide 4">
+      <img src="carrossel5.jpg" alt="Slide 5">
+      <img src="carrossel6.jpg" alt="Slide 6">
+      <button class="prev" onclick="moveSlide(-1)">❮</button>
+      <button class="next" onclick="moveSlide(1)">❯</button>
+    </div>
+
+
+
+    
+    <div class="grid">
+      <div class="card"><img src="prato1.jpg" alt="Prato 1"><p>Pão de queijo, 3 unidades por R$12,99</p></div>
+      <div class="card"><img src="prato2.jpg" alt="Prato 2"><p>Torrada Francesa: presunto, queijo e ovo por R$5,99</p></div>
+      <div class="card"><img src="prato3.jpg" alt="Prato 3"><p>Brownie bolo por R$8,00 <br> 2 unidades </p></div>
+      <div class="card"><img src="prato4.jpg" alt="Prato 4"><p>Cheesecake de frutas vermelhas por R$13,00 a fatia</p></div>
+      <div class="card"><img src="prato5.jpg" alt="Prato 5"><p>Torta de limão: fatia R$10,00</p></div>
+      <div class="card"><img src="prato6.jpg" alt="Prato 6"><p>Bolo de laranja: fatia R$10,00</p></div>
+      <div class="card"><img src="prato7.jpg" alt="Prato 7"><p>Bolo de cenoura: fatia R$4,99</p></div>
+      <div class="card"><img src="prato8.jpg" alt="Prato 8"><p>Capuccino 90ml por R$5,00</p></div>
+      <div class="card"><img src="prato9.jpg" alt="Prato 9"><p>Expresso 75ml por R$4,00</p></div>
+      <div class="card"><img src="prato10.jpg" alt="Prato 10"><p>Americano: copo 150ml por R$6,50</p></div>
+      <div class="card"><img src="carrossel1.jpg" alt="Prato 11"><p>Croissant por apenas R$5,99!</p></div>
+      <div class="card"><img src="carrossel2.jpg" alt="Prato 12"><p>Blue fish: salada de folhas verdes, frutas da estação, nozes e molho especial por R$19,99</p></div>
+      <div class="card"><img src="carrossel3.jpg" alt="Prato 13"><p>Café Midnight mocha por R$15,99</p></div>
+      <div class="card"><img src="carrossel4.jpg" alt="Prato 14"><p>Café Missipi cold brew por R$14,99</p></div>
+      <div class="card"><img src="carrossel5.jpg" alt="Prato 15"><p>Sanduíche Veggie soul: mix de legumes grelhados com queijo especial da casa por R$19,99 </p></div>
+    </div>
+  </section>
+
+  <script>
+    
+    function validarLogin(event) {
+      event.preventDefault(); 
+
+      const usuario = document.getElementById("usuario").value;
+      const senha = document.getElementById("senha").value;
+
+      if (usuario === "admin.123@" && senha === "12345") {
+        window.location.href = "estoque.html"; 
+      } else {
+        showCliente(); 
+      }
+    }
+
+    
+    function showCliente() {
+      document.getElementById('login-section').classList.remove('active');
+      document.getElementById('cliente-section').classList.add('active');
+    }
+
+    
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel img');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) slide.classList.add('active');
+      });
+    }
+
+    function moveSlide(step) {
+      currentSlide = (currentSlide + step + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
+  </script>
+</body>
+</html>
